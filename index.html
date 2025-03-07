@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>About Me</title>
+    <link rel="icon" href="Images/pfp.png" type="image/png">
+    <link rel="stylesheet" href="style.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+</head>
+<body>
+    <main class="container">
+        <!-- Profile Section -->
+        <section class="profile">
+            <div class="profile-image">
+                <img src="Images/pfp.png" alt="Profile Picture" class="pfp">
+            </div>
+            <h1 class="name">Adam H.</h1>
+            <h2 class="title">Unity Developer</h2>
+            <p class="bio">
+                I'm a Unity developer making games for almost 6 years now. I'm currently working on a game called Flopshot that you can wishlist on Steam now. I run the company Hawa Hawa which is not a company but more a team of a lot of people meaning myself.
+            </p>
+        </section>
+
+        <!-- Featured Project Section -->
+        <section class="featured-project">
+            <h2 class="section-title">Featured Work</h2>
+            <div class="project-showcase">
+                <div class="project-showcase-image">
+                    <canvas id="audioWaveCanvas" aria-label="Audio wave visualization" role="img"></canvas>
+                    <div class="audio-system-overlay">
+                        <img src="Images/Audio System ScreenShot.png" alt="Unity Audio Framework Interface" class="audio-system-screenshot">
+                    </div>
+                </div>
+                <div class="project-showcase-content">
+                    <h3 class="project-showcase-title">HawaHawa Audio System</h3>
+                    <p class="project-showcase-description">
+                        A lightweight and powerful audio framework designed for seamless integration into Unity projects. It provides a robust audio manager that simplifies sound playback, randomization, and mixer implementation.
+                    </p>
+                    <div class="project-features">
+                        <h4 class="features-title">Key Features</h4>
+                        <ul class="features-list">
+                            <li>Lightweight & Optimized – Minimal performance overhead for any Unity project.</li>
+                            <li>Easy-to-Use API – Simple implementation with minimal coding required.</li>
+                            <li>Audio Groups – Organize and play random sound variations dynamically.</li>
+                            <li>Random Pitch & Fading – Natural sound variation and smooth transitions.</li>
+                            <li>Mixer Group Integration – Route sounds through Unity's Audio Mixer.</li>
+                        </ul>
+                    </div>
+                    <a href="https://example.com" target="_blank" rel="noopener noreferrer">
+                        <button class="project-showcase-button">See Project</button>
+                    </a>
+                </div>
+            </div>
+        </section>
+
+        <!-- Contact Section -->
+        <section class="contact">
+            <h2 class="section-title">Get In Touch</h2>
+            <form id="contact-form" class="contact-form">
+                <div class="form-group">
+                    <label for="name">Name</label>
+                    <input type="text" id="name" name="name" required>
+                </div>
+                <div class="form-group">
+                    <label for="email">Email</label>
+                    <input type="email" id="email" name="email" required>
+                </div>
+                <div class="form-group">
+                    <label for="message">Message</label>
+                    <textarea id="message" name="message" rows="5" required></textarea>
+                </div>
+                <button type="submit" class="submit-button">Send Message</button>
+            </form>
+        </section>
+    </main>
+
+    <!-- EmailJS Library -->
+    <script src="https://cdn.jsdelivr.net/npm/@emailjs/browser@3/dist/email.min.js"></script>
+    
+    <!-- Main Script with Email Configuration -->
+    <script src="script.js"></script>
+</body>
+</html> 
