@@ -348,8 +348,6 @@
             width: 1rem;
             height: 1rem;
             stroke: currentColor;
-            stroke-width: 2;
-            transition: all 0.2s ease;
         }
 
         .copy-button.copied {
@@ -679,9 +677,714 @@
                 padding: 0.75rem 0.5rem;
             }
         }
+
+        /* Sidebar Navigation Styles */
+        .sidebar {
+            position: fixed;
+            top: 1.5rem;
+            left: 1.5rem;
+            width: 280px;
+            height: calc(100vh - 3rem);
+            background: var(--card-bg);
+            backdrop-filter: blur(15px);
+            -webkit-backdrop-filter: blur(15px);
+            border: 1.5px solid var(--button-border);
+            border-radius: 1.25rem;
+            z-index: 1000;
+            display: flex;
+            flex-direction: column;
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.08);
+            overflow: hidden;
+        }
+
+        .sidebar-backdrop {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.3);
+            backdrop-filter: blur(3px);
+            -webkit-backdrop-filter: blur(3px);
+            z-index: 999;
+            opacity: 0;
+            visibility: hidden;
+            transition: all 0.3s ease;
+        }
+
+        .sidebar-header {
+            padding: 1.25rem 1.5rem 1rem;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            border-bottom: 1.5px solid var(--button-border);
+        }
+
+        .logo-container {
+            display: flex;
+            align-items: center;
+            gap: 0.75rem;
+        }
+
+        .sidebar-logo {
+            width: 1.5rem;
+            height: 1.5rem;
+            stroke: var(--text-color);
+            stroke-width: 2;
+        }
+
+        .sidebar-title {
+            font-size: 1rem;
+            font-weight: 600;
+            color: var(--text-color);
+            letter-spacing: -0.01em;
+        }
+
+        .sidebar-toggle {
+            display: none;
+            background: transparent;
+            border: none;
+            color: var(--text-color);
+            cursor: pointer;
+            padding: 0.5rem;
+            border-radius: 0.5rem;
+            line-height: 0;
+        }
+
+        .sidebar-toggle svg {
+            width: 1.25rem;
+            height: 1.25rem;
+            stroke: var(--text-color);
+            stroke-width: 2;
+            transition: all 0.2s ease;
+        }
+
+        .sidebar-toggle:hover {
+            background: var(--button-border);
+        }
+
+        .sidebar-search {
+            padding: 0.75rem 1.5rem 1rem;
+            border-bottom: 1.5px solid var(--button-border);
+        }
+
+        .search-container {
+            position: relative;
+            display: flex;
+            align-items: center;
+        }
+
+        .search-icon {
+            position: absolute;
+            left: 1rem;
+            width: 1rem;
+            height: 1rem;
+            stroke: var(--text-color);
+            opacity: 0.6;
+        }
+
+        .search-input {
+            width: 100%;
+            padding: 0.75rem 1rem 0.75rem 2.5rem;
+            background: var(--button-bg);
+            border: 1.5px solid var(--button-border);
+            border-radius: 2rem;
+            font-size: 0.875rem;
+            color: var(--text-color);
+            transition: all 0.2s ease;
+            outline: none;
+        }
+
+        .search-input:focus {
+            border-color: var(--button-hover-border);
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
+        }
+
+        .search-input::placeholder {
+            color: var(--text-color);
+            opacity: 0.6;
+        }
+
+        .sidebar-nav {
+            flex: 1;
+            overflow-y: auto;
+            padding: 0.75rem 0;
+            scrollbar-width: thin;
+            scrollbar-color: var(--button-border) transparent;
+        }
+
+        .sidebar-nav::-webkit-scrollbar {
+            width: 4px;
+        }
+
+        .sidebar-nav::-webkit-scrollbar-track {
+            background: transparent;
+        }
+
+        .sidebar-nav::-webkit-scrollbar-thumb {
+            background-color: var(--button-border);
+            border-radius: 4px;
+        }
+
+        .nav-list {
+            list-style: none;
+            padding: 0 1.5rem;
+            margin: 0;
+        }
+
+        .nav-item {
+            margin-bottom: 0.5rem;
+            border-radius: 0.75rem;
+            transition: all 0.2s ease;
+            list-style-type: none;
+        }
+
+        .nav-item-header {
+            display: flex;
+            align-items: center;
+            gap: 0.75rem;
+            position: relative;
+            padding: 0.75rem 1rem;
+            border-radius: 0.75rem;
+            transition: all 0.2s ease;
+        }
+
+        .nav-item-header:hover {
+            background: var(--button-border);
+        }
+
+        .nav-icon {
+            width: 1.25rem;
+            height: 1.25rem;
+            stroke: var(--text-color);
+            opacity: 0.8;
+            flex-shrink: 0;
+        }
+
+        .nav-link {
+            display: block;
+            color: var(--text-color);
+            text-decoration: none;
+            font-size: 0.9375rem;
+            font-weight: 500;
+            transition: all 0.2s ease;
+            opacity: 0.85;
+            flex: 1;
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
+        }
+
+        .nav-link:hover {
+            opacity: 1;
+        }
+
+        .collapse-toggle {
+            background: transparent;
+            border: none;
+            color: var(--text-color);
+            cursor: pointer;
+            padding: 0.25rem;
+            border-radius: 0.25rem;
+            line-height: 0;
+            opacity: 0.6;
+            transition: all 0.2s ease;
+        }
+
+        .collapse-toggle svg {
+            width: 1rem;
+            height: 1rem;
+            stroke: var(--text-color);
+            transition: transform 0.3s ease;
+        }
+
+        .collapse-toggle:hover {
+            opacity: 1;
+            background: var(--button-border);
+        }
+
+        .nav-item.collapsed .collapse-toggle svg {
+            transform: rotate(-90deg);
+        }
+
+        .nav-item.collapsed .nav-sublist {
+            max-height: 0;
+            opacity: 0;
+            visibility: hidden;
+            margin: 0;
+        }
+
+        .nav-sublist {
+            list-style: none;
+            padding: 0.25rem 0 0.25rem 2.25rem;
+            margin: 0.25rem 0 0.5rem;
+            border-left: 1.5px solid var(--button-border);
+            margin-left: 0.625rem;
+            max-height: 500px;
+            opacity: 1;
+            visibility: visible;
+            transition: all 0.3s ease;
+            overflow: hidden;
+        }
+
+        .nav-subitem {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            margin-bottom: 0.5rem;
+            padding: 0.5rem 0.75rem;
+            border-radius: 0.5rem;
+            transition: all 0.2s ease;
+            list-style-type: none;
+        }
+
+        .nav-subitem:hover {
+            background: var(--button-border);
+        }
+
+        .nav-subicon {
+            width: 0.875rem;
+            height: 0.875rem;
+            stroke: var(--text-color);
+            opacity: 0.7;
+            flex-shrink: 0;
+        }
+
+        .nav-subitem .nav-link {
+            font-size: 0.875rem;
+            font-weight: 400;
+        }
+
+        .nav-link.active {
+            color: var(--text-color);
+            opacity: 1;
+            font-weight: 600;
+        }
+
+        .nav-item-header:has(.nav-link.active) {
+            background: var(--button-bg);
+            box-shadow: var(--button-shadow);
+        }
+
+        .nav-subitem:has(.nav-link.active) {
+            background: var(--button-bg);
+            box-shadow: var(--button-shadow);
+        }
+
+        .nav-item-header:has(.nav-link.active) .nav-icon,
+        .nav-subitem:has(.nav-link.active) .nav-subicon {
+            opacity: 1;
+        }
+
+        .highlight-target {
+            animation: highlight-pulse 2s ease-out;
+        }
+
+        @keyframes highlight-pulse {
+            0% {
+                background-color: rgba(255, 186, 8, 0.3);
+            }
+            70% {
+                background-color: rgba(255, 186, 8, 0.2);
+            }
+            100% {
+                background-color: transparent;
+            }
+        }
+
+        /* Mobile sidebar toggle */
+        .mobile-sidebar-toggle {
+            display: none;
+            position: fixed;
+            top: 1rem;
+            left: 1rem;
+            width: 3rem;
+            height: 3rem;
+            background: var(--button-bg);
+            border: 1.5px solid var(--button-border);
+            border-radius: 0.75rem;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+            z-index: 999;
+            cursor: pointer;
+            align-items: center;
+            justify-content: center;
+            transition: all 0.3s ease;
+        }
+
+        .mobile-sidebar-toggle svg {
+            width: 1.5rem;
+            height: 1.5rem;
+            stroke: var(--text-color);
+            transition: transform 0.3s ease;
+        }
+
+        .mobile-sidebar-toggle:hover {
+            border-color: var(--button-hover-border);
+            background-color: var(--button-bg-hover);
+            box-shadow: 0 6px 16px rgba(0, 0, 0, 0.12);
+        }
+
+        /* Adjust main content to make room for sidebar */
+        .container {
+            margin-left: 310px;
+            transition: margin-left 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+            max-width: calc(100% - 340px);
+        }
+
+        /* Mobile styles for sidebar */
+        @media (max-width: 1200px) {
+            .sidebar {
+                transform: translateX(calc(-100% - 1.5rem));
+                left: 0;
+                top: 0;
+                height: 100vh;
+                border-radius: 0 1.25rem 1.25rem 0;
+                border-left: none;
+                width: 300px;
+                z-index: 1010;
+            }
+
+            .sidebar.active {
+                transform: translateX(0);
+                box-shadow: 0 0 30px rgba(0, 0, 0, 0.15);
+            }
+
+            .sidebar.active + .sidebar-backdrop {
+                opacity: 1;
+                visibility: visible;
+            }
+
+            .sidebar-toggle {
+                display: block;
+            }
+
+            .mobile-sidebar-toggle {
+                display: flex;
+                z-index: 1009;
+            }
+
+            .container {
+                margin-left: 0;
+                max-width: 100%;
+            }
+            
+            .nav-item-header {
+                padding: 0.875rem 1rem;
+            }
+            
+            .nav-subitem {
+                padding: 0.625rem 0.75rem;
+            }
+        }
+        
+        @media (max-width: 768px) {
+            .container {
+                padding: 1.5rem 1rem;
+            }
+
+            .mobile-sidebar-toggle {
+                top: 0.75rem;
+                left: 0.75rem;
+                width: 2.75rem;
+                height: 2.75rem;
+                position: fixed;
+            }
+
+            .mobile-sidebar-toggle svg {
+                width: 1.25rem;
+                height: 1.25rem;
+            }
+
+            h1 {
+                font-size: 2rem;
+            }
+
+            h2 {
+                font-size: 1.5rem;
+            }
+
+            h3 {
+                font-size: 1.15rem;
+            }
+
+            .glass-card {
+                padding: 1.5rem;
+                margin: 1.5rem 0;
+            }
+
+            .code-block {
+                margin: 0.75rem 0;
+            }
+
+            .code-header {
+                padding: 0.5rem 0.75rem;
+            }
+
+            .code-content {
+                padding: 0.75rem;
+            }
+
+            .code-content code {
+                font-size: 0.8rem;
+            }
+
+            .button {
+                height: 2.5rem;
+            }
+
+            .theme-toggle {
+                top: 0.75rem;
+                right: 0.75rem;
+                min-width: auto;
+                padding: 0.4rem 0.75rem;
+            }
+
+            .theme-toggle span {
+                display: none;
+            }
+
+            .theme-toggle svg {
+                margin-right: 0;
+            }
+
+            .unity-store-button {
+                bottom: 1.25rem;
+                right: 1.25rem;
+                padding: 0.45rem 1.5rem;
+                font-size: 0.8rem;
+                border-radius: 1.5rem;
+            }
+            
+            .unity-store-button .store-icon {
+                width: 1rem;
+                height: 1rem;
+            }
+        }
     </style>
 </head>
 <body>
+    <!-- Floating Sidebar Navigation -->
+    <aside class="sidebar">
+        <div class="sidebar-header">
+            <div class="logo-container">
+                <svg class="sidebar-logo" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                    <path d="M3 18v-6a9 9 0 0 1 18 0v6"></path>
+                    <path d="M21 19a2 2 0 0 1-2 2h-1a2 2 0 0 1-2-2v-3a2 2 0 0 1 2-2h3zM3 19a2 2 0 0 0 2 2h1a2 2 0 0 0 2-2v-3a2 2 0 0 0-2-2H3z"></path>
+                </svg>
+                <span class="sidebar-title">Audio System</span>
+            </div>
+            <button class="sidebar-toggle" aria-label="Toggle sidebar">
+                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                    <line x1="18" y1="6" x2="6" y2="18"></line>
+                    <line x1="6" y1="6" x2="18" y2="18"></line>
+                </svg>
+            </button>
+        </div>
+        
+        <div class="sidebar-search">
+            <div class="search-container">
+                <svg class="search-icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                    <circle cx="11" cy="11" r="8"></circle>
+                    <line x1="21" y1="21" x2="16.65" y2="16.65"></line>
+                </svg>
+                <input type="text" class="search-input" placeholder="Search documentation...">
+            </div>
+        </div>
+        
+        <nav class="sidebar-nav">
+            <ul class="nav-list">
+                <li class="nav-item collapsed">
+                    <div class="nav-item-header">
+                        <svg class="nav-icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                            <path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"></path>
+                            <polyline points="9 22 9 12 15 12 15 22"></polyline>
+                        </svg>
+                        <a href="#getting-started" class="nav-link">Getting Started</a>
+                        <button class="collapse-toggle" aria-label="Toggle section">
+                            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                <polyline points="6 9 12 15 18 9"></polyline>
+                            </svg>
+                        </button>
+                    </div>
+                    <ul class="nav-sublist">
+                        <li class="nav-subitem">
+                            <svg class="nav-subicon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                <circle cx="12" cy="12" r="10"></circle>
+                                <line x1="12" y1="8" x2="12" y2="16"></line>
+                                <line x1="8" y1="12" x2="16" y2="12"></line>
+                            </svg>
+                            <a href="#inspector-assignment" class="nav-link">Inspector Assignment</a>
+                        </li>
+                        <li class="nav-subitem">
+                            <svg class="nav-subicon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                <polyline points="9 18 15 12 9 6"></polyline>
+                            </svg>
+                            <a href="#get-functions" class="nav-link">Get Functions</a>
+                        </li>
+                    </ul>
+                </li>
+                
+                <li class="nav-item collapsed">
+                    <div class="nav-item-header">
+                        <svg class="nav-icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                            <path d="M12 1a3 3 0 0 0-3 3v8a3 3 0 0 0 6 0V4a3 3 0 0 0-3-3z"></path>
+                            <path d="M19 10v2a7 7 0 0 1-14 0v-2"></path>
+                            <line x1="12" y1="19" x2="12" y2="23"></line>
+                            <line x1="8" y1="23" x2="16" y2="23"></line>
+                        </svg>
+                        <a href="#single-sound" class="nav-link">Single Sound</a>
+                        <button class="collapse-toggle" aria-label="Toggle section">
+                            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                <polyline points="6 9 12 15 18 9"></polyline>
+                            </svg>
+                        </button>
+                    </div>
+                    <ul class="nav-sublist">
+                        <li class="nav-subitem">
+                            <svg class="nav-subicon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                <circle cx="12" cy="12" r="10"></circle>
+                                <line x1="12" y1="8" x2="12" y2="16"></line>
+                                <line x1="8" y1="12" x2="16" y2="12"></line>
+                            </svg>
+                            <a href="#creating-single-sound" class="nav-link">Creating a Single Sound</a>
+                        </li>
+                        <li class="nav-subitem">
+                            <svg class="nav-subicon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                <path d="M18 8h1a4 4 0 0 1 0 8h-1"></path>
+                                <path d="M2 8h16v9a4 4 0 0 1-4 4H6a4 4 0 0 1-4-4V8z"></path>
+                                <line x1="6" y1="1" x2="6" y2="4"></line>
+                                <line x1="10" y1="1" x2="10" y2="4"></line>
+                                <line x1="14" y1="1" x2="14" y2="4"></line>
+                            </svg>
+                            <a href="#single-sound-functions" class="nav-link">Available Functions</a>
+                        </li>
+                        <li class="nav-subitem">
+                            <svg class="nav-subicon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                <path d="M14.7 6.3a1 1 0 0 0 0 1.4l1.6 1.6a1 1 0 0 0 1.4 0l3.77-3.77a6 6 0 0 1-7.94 7.94l-6.91 6.91a2.12 2.12 0 0 1-3-3l6.91-6.91a6 6 0 0 1 7.94-7.94l-3.76 3.76z"></path>
+                            </svg>
+                            <a href="#single-sound-use-cases" class="nav-link">Common Use Cases</a>
+                        </li>
+                    </ul>
+                </li>
+                
+                <li class="nav-item collapsed">
+                    <div class="nav-item-header">
+                        <svg class="nav-icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                            <rect x="4" y="2" width="16" height="20" rx="2" ry="2"></rect>
+                            <line x1="12" y1="18" x2="12" y2="18"></line>
+                            <line x1="8" y1="6" x2="16" y2="6"></line>
+                            <line x1="8" y1="10" x2="16" y2="10"></line>
+                            <line x1="8" y1="14" x2="16" y2="14"></line>
+                        </svg>
+                        <a href="#audio-collections" class="nav-link">Audio Collections</a>
+                        <button class="collapse-toggle" aria-label="Toggle section">
+                            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                <polyline points="6 9 12 15 18 9"></polyline>
+                            </svg>
+                        </button>
+                    </div>
+                    <ul class="nav-sublist">
+                        <li class="nav-subitem">
+                            <svg class="nav-subicon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                <path d="M18 8h1a4 4 0 0 1 0 8h-1"></path>
+                                <path d="M2 8h16v9a4 4 0 0 1-4 4H6a4 4 0 0 1-4-4V8z"></path>
+                                <line x1="6" y1="1" x2="6" y2="4"></line>
+                                <line x1="10" y1="1" x2="10" y2="4"></line>
+                                <line x1="14" y1="1" x2="14" y2="4"></line>
+                            </svg>
+                            <a href="#collections-functions" class="nav-link">Available Functions</a>
+                        </li>
+                        <li class="nav-subitem">
+                            <svg class="nav-subicon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                <path d="M14.7 6.3a1 1 0 0 0 0 1.4l1.6 1.6a1 1 0 0 0 1.4 0l3.77-3.77a6 6 0 0 1-7.94 7.94l-6.91 6.91a2.12 2.12 0 0 1-3-3l6.91-6.91a6 6 0 0 1 7.94-7.94l-3.76 3.76z"></path>
+                            </svg>
+                            <a href="#collections-use-cases" class="nav-link">Common Use Cases</a>
+                        </li>
+                    </ul>
+                </li>
+                
+                <li class="nav-item collapsed">
+                    <div class="nav-item-header">
+                        <svg class="nav-icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                            <path d="M9 18V5l12-2v13"></path>
+                            <circle cx="6" cy="18" r="3"></circle>
+                            <circle cx="18" cy="16" r="3"></circle>
+                        </svg>
+                        <a href="#sounds-from-groups" class="nav-link">Sounds from Groups</a>
+                        <button class="collapse-toggle" aria-label="Toggle section">
+                            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                <polyline points="6 9 12 15 18 9"></polyline>
+                            </svg>
+                        </button>
+                    </div>
+                    <ul class="nav-sublist">
+                        <li class="nav-subitem">
+                            <svg class="nav-subicon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                <path d="M18 8h1a4 4 0 0 1 0 8h-1"></path>
+                                <path d="M2 8h16v9a4 4 0 0 1-4 4H6a4 4 0 0 1-4-4V8z"></path>
+                                <line x1="6" y1="1" x2="6" y2="4"></line>
+                                <line x1="10" y1="1" x2="10" y2="4"></line>
+                                <line x1="14" y1="1" x2="14" y2="4"></line>
+                            </svg>
+                            <a href="#groups-functions" class="nav-link">Available Functions</a>
+                        </li>
+                        <li class="nav-subitem">
+                            <svg class="nav-subicon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                <path d="M14.7 6.3a1 1 0 0 0 0 1.4l1.6 1.6a1 1 0 0 0 1.4 0l3.77-3.77a6 6 0 0 1-7.94 7.94l-6.91 6.91a2.12 2.12 0 0 1-3-3l6.91-6.91a6 6 0 0 1 7.94-7.94l-3.76 3.76z"></path>
+                            </svg>
+                            <a href="#groups-use-cases" class="nav-link">Common Use Cases</a>
+                        </li>
+                    </ul>
+                </li>
+                
+                <li class="nav-item">
+                    <div class="nav-item-header">
+                        <svg class="nav-icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                            <path d="M12 2L2 7l10 5 10-5-10-5z"></path>
+                            <path d="M2 17l10 5 10-5"></path>
+                            <path d="M2 12l10 5 10-5"></path>
+                        </svg>
+                        <a href="#best-practices" class="nav-link">Best Practices</a>
+                    </div>
+                </li>
+                
+                <li class="nav-item collapsed">
+                    <div class="nav-item-header">
+                        <svg class="nav-icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                            <polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"></polygon>
+                        </svg>
+                        <a href="#example-usage" class="nav-link">Example Usage</a>
+                        <button class="collapse-toggle" aria-label="Toggle section">
+                            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                <polyline points="6 9 12 15 18 9"></polyline>
+                            </svg>
+                        </button>
+                    </div>
+                    <ul class="nav-sublist">
+                        <li class="nav-subitem">
+                            <svg class="nav-subicon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                <rect x="3" y="11" width="18" height="11" rx="2" ry="2"></rect>
+                                <path d="M7 11V7a5 5 0 0 1 10 0v4"></path>
+                            </svg>
+                            <a href="#key-controls" class="nav-link">Key Controls</a>
+                        </li>
+                    </ul>
+                </li>
+            </ul>
+        </nav>
+    </aside>
+
+    <div class="sidebar-backdrop"></div>
+    
+    <button class="mobile-sidebar-toggle" aria-label="Toggle sidebar">
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <line x1="3" y1="12" x2="21" y2="12"></line>
+            <line x1="3" y1="6" x2="21" y2="6"></line>
+            <line x1="3" y1="18" x2="21" y2="18"></line>
+        </svg>
+    </button>
+
     <button class="button theme-toggle" aria-label="Toggle theme" role="switch" aria-checked="false">
         <svg class="sun-icon" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor">
             <circle cx="12" cy="12" r="5"></circle>
@@ -852,55 +1555,6 @@ SoundFromGroup footsteps = AudioSystem.GetSoundFromGroup("PlayerSounds", "Footst
         </div>
 
         <div class="glass-card">
-            <h2>Audio Collections</h2>
-            <p>Audio Collections are containers that manage multiple audio clips as a group. They provide functionality for playing, stopping, and manipulating multiple related sounds from a single container. Each collection can hold multiple audio clips and provides methods for both specific and random playback.</p>
-
-            <div class="code-block">
-                <div class="code-header">
-                    <div class="window-controls">
-                        <div class="window-control window-close"></div>
-                        <div class="window-control window-minimize"></div>
-                        <div class="window-control window-maximize"></div>
-                    </div>
-                    <div class="code-title">Creating an Audio Collection</div>
-                    <button class="copy-button" aria-label="Copy code">
-                        <svg class="copy-icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor">
-                            <rect x="9" y="9" width="13" height="13" rx="2" ry="2"></rect>
-                            <path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path>
-                        </svg>
-                        <svg class="check-icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" style="display: none;">
-                            <path d="M20 6L9 17l-5-5"></path>
-                        </svg>
-                    </button>
-                </div>
-                <div class="code-content">
-                    <pre><code class="language-csharp">public AudioCollection sfxCollection;</code></pre>
-                </div>
-            </div>
-
-            <h3>Available Functions</h3>
-            <div class="method">
-                <p><code>sfxCollection.Play(string soundName)</code> - Plays a specific sound from the collection using its name.</p>
-                <p><code>sfxCollection.Play(string soundName, float volume, float pitch)</code> - Plays a sound with custom volume (0-1) and pitch settings.</p>
-                <p><code>sfxCollection.PlayRandomPitch(string soundName, float minPitch, float maxPitch)</code> - Plays a specific sound with random pitch between min and max values.</p>
-                <p><code>sfxCollection.Stop(string soundName)</code> - Stops playback of a specific sound in the collection.</p>
-                <p><code>sfxCollection.PlayRandomAudio()</code> - Plays a random sound from the entire collection.</p>
-            </div>
-
-            <h3>Common Use Cases</h3>
-            <ul>
-                <li>Background Music Collections: Managing different tracks for various game states or levels</li>
-                <li>Character Sound Effects: Grouping voice lines, footsteps, or action sounds</li>
-                <li>UI Sound Collections: Managing button clicks, hover sounds, and menu transitions</li>
-                <li>Ambient Sound Groups: Organizing environmental sounds like weather, nature, or atmosphere</li>
-                <li>Combat Sound Effects: Grouping weapon sounds, impact effects, or ability sounds</li>
-                <li>Vehicle Sound Collections: Managing engine sounds, horns, or impact effects</li>
-                <li>NPC Voice Collections: Organizing dialogue or reaction sounds for characters</li>
-                <li>Achievement/Reward Sounds: Managing positive feedback sounds for player accomplishments</li>
-            </ul>
-        </div>
-
-        <div class="glass-card">
             <h2>Single Sound</h2>
             <p>Use SingleSound for managing standalone sound effects that aren't part of a collection.</p>
 
@@ -952,6 +1606,55 @@ SoundFromGroup footsteps = AudioSystem.GetSoundFromGroup("PlayerSounds", "Footst
                 <li>Game Events: Countdown timers, round start/end signals</li>
                 <li>Menu Navigation: Selection confirms, back button sounds</li>
                 <li>Status Changes: Health pickup, power-up activation, shield break</li>
+            </ul>
+        </div>
+
+        <div class="glass-card">
+            <h2>Audio Collections</h2>
+            <p>Audio Collections are containers that manage multiple audio clips as a group. They provide functionality for playing, stopping, and manipulating multiple related sounds from a single container. Each collection can hold multiple audio clips and provides methods for both specific and random playback.</p>
+
+            <div class="code-block">
+                <div class="code-header">
+                    <div class="window-controls">
+                        <div class="window-control window-close"></div>
+                        <div class="window-control window-minimize"></div>
+                        <div class="window-control window-maximize"></div>
+                    </div>
+                    <div class="code-title">Creating an Audio Collection</div>
+                    <button class="copy-button" aria-label="Copy code">
+                        <svg class="copy-icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor">
+                            <rect x="9" y="9" width="13" height="13" rx="2" ry="2"></rect>
+                            <path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path>
+                        </svg>
+                        <svg class="check-icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" style="display: none;">
+                            <path d="M20 6L9 17l-5-5"></path>
+                        </svg>
+                    </button>
+                </div>
+                <div class="code-content">
+                    <pre><code class="language-csharp">public AudioCollection sfxCollection;</code></pre>
+                </div>
+            </div>
+
+            <h3>Available Functions</h3>
+            <div class="method">
+                <p><code>sfxCollection.Play(string soundName)</code> - Plays a specific sound from the collection using its name.</p>
+                <p><code>sfxCollection.Play(string soundName, float volume, float pitch)</code> - Plays a sound with custom volume (0-1) and pitch settings.</p>
+                <p><code>sfxCollection.PlayRandomPitch(string soundName, float minPitch, float maxPitch)</code> - Plays a specific sound with random pitch between min and max values.</p>
+                <p><code>sfxCollection.Stop(string soundName)</code> - Stops playback of a specific sound in the collection.</p>
+                <p><code>sfxCollection.PlayRandomAudio()</code> - Plays a random sound from the entire collection.</p>
+            </div>
+
+            <h3>Common Use Cases</h3>
+            <ul>
+                <li>Background Music Collections: Managing different tracks for various game states or levels</li>
+                <li>Character Sound Effects: Grouping voice lines, footsteps, or action sounds</li>
+                <li>UI Sound Collections: Managing button clicks, hover sounds, and menu transitions</li>
+                <li>Ambient Sound Groups: Organizing environmental sounds like weather, nature, or atmosphere</li>
+                <li>Combat Sound Effects: Grouping weapon sounds, impact effects, or ability sounds</li>
+                <li>Vehicle Sound Collections: Managing engine sounds, horns, or impact effects</li>
+                <li>NPC Voice Collections: Organizing dialogue or reaction sounds for characters</li>
+                <li>Achievement/Reward Sounds: Managing positive feedback sounds for player accomplishments</li>
             </ul>
         </div>
 
@@ -1112,7 +1815,7 @@ public class AudioManager : MonoBehaviour
         <div class="glass-card" style="background: rgba(88, 101, 242, 0.1); border-color: rgba(88, 101, 242, 0.3); padding: 1.5rem;">
             <div style="display: flex; align-items: center; gap: 1rem;">
                 <svg width="24" height="24" viewBox="0 0 24 24" fill="currentColor" style="color: #5865F2;">
-                    <path d="M19.27 5.33C17.94 4.71 16.5 4.26 15 4a.09.09 0 0 0-.07.03c-.18.33-.39.76-.53 1.09a16.09 16.09 0 0 0-4.8 0c-.14-.34-.35-.76-.54-1.09c-.01-.02-.04-.03-.07-.03c-1.5.26-2.93.71-4.27 1.33c-.01 0-.02.01-.03.02c-2.72 4.07-3.47 8.03-3.1 11.95c0 .02.01.04.03.05c1.8 1.32 3.53 2.12 5.24 2.65c.03.01.06 0 .07-.02c.4-.55.76-1.13 1.07-1.74c.02-.04 0-.08-.04-.09c-.57-.22-1.11-.48-1.64-.78c-.04-.02-.04-.08-.01-.11c.11-.08.22-.17.33-.25c.02-.02.05-.02.07-.01c3.44 1.57 7.15 1.57 10.55 0c.02-.01.05-.01.07.01c.11.09.22.17.33.26c.04.03.04.09-.01.11c-.52.31-1.07.56-1.64.78c-.04.01-.05.06-.04.09c.32.61.68 1.19 1.07 1.74c.03.01.06.02.09.01c1.72-.53 3.45-1.33 5.25-2.65c.02-.01.03-.03.03-.05c.44-4.53-.73-8.46-3.1-11.95c-.01-.01-.02-.02-.04-.02zM8.52 14.91c-1.03 0-1.89-.95-1.89-2.12s.84-2.12 1.89-2.12c1.06 0 1.9.96 1.89 2.12c0 1.17-.84 2.12-1.89 2.12zm6.97 0c-1.03 0-1.89-.95-1.89-2.12s.84-2.12 1.89-2.12c1.06 0 1.9.96 1.89 2.12c0 1.17-.83 2.12-1.89 2.12z"/>
+                    <path d="M19.27 5.33C17.94 4.71 16.5 4.26 15 4a.09.09 0 0 0-.07.03c-.18.33-.39.76-.53 1.09a16.09 16.09 0 0 0-4.8 0c-.14-.34-.35-.76-.54-1.09c-.01-.02-.04-.03-.07-.03c-1.5.26-2.93.71-4.27 1.33c-.01 0-.02.01-.03.02c-2.72 4.07-3.47 8.03-3.1 11.95c0 .02.01.04.03.05c1.8 1.32 3.53 2.12 5.24 2.65c.03.01.06 0 .07-.02c.4-.55.76-1.13 1.07-1.74c.02-.04 0-.08-.04-.09c-.57-.22-1.11-.48-1.64-.78c-.04-.02-.04-.08-.01-.11c.11-.08.22-.17.33-.25c.02-.02.05-.02.07-.01c3.44 1.57 7.15 1.57 10.55 0c.02-.01.05-.01.07.01c.11.09.22.17.33.26c.04.03.04.09-.01.11c-.52.31-1.07.56-1.64.78c-.04.01-.05.06-.04.09c.32.61.68 1.19 1.07 1.74c.03.01.06.02.09.01c1.72-.53 3.45-1.33 5.25-2.65c.02-.01.03-.03.03-.05c.44-4.53-.73-8.46-3.1-11.95c-.01-.01-.02-.02-.02-.04-.02zM8.52 14.91c-1.03 0-1.89-.95-1.89-2.12s.84-2.12 1.89-2.12c1.06 0 1.9.96 1.89 2.12c0 1.17-.84 2.12-1.89 2.12zm6.97 0c-1.03 0-1.89-.95-1.89-2.12s.84-2.12 1.89-2.12c1.06 0 1.9.96 1.89 2.12c0 1.17-.84 2.12-1.89 2.12z"></path>
                 </svg>
                 <div>
                     <h3 style="margin: 0 0 0.5rem 0;">Need Help?</h3>
@@ -1169,6 +1872,374 @@ public class AudioManager : MonoBehaviour
                     });
                 });
             });
+        });
+
+        // Sidebar Navigation Functionality
+        document.addEventListener('DOMContentLoaded', () => {
+            const sidebar = document.querySelector('.sidebar');
+            const sidebarToggle = document.querySelector('.sidebar-toggle');
+            const mobileSidebarToggle = document.querySelector('.mobile-sidebar-toggle');
+            const sidebarBackdrop = document.querySelector('.sidebar-backdrop');
+            const navLinks = document.querySelectorAll('.nav-link');
+            const navItems = document.querySelectorAll('.nav-item');
+            const collapseToggles = document.querySelectorAll('.collapse-toggle');
+            const searchInput = document.querySelector('.search-input');
+            
+            // Expand all sections by default for better discoverability
+            navItems.forEach(item => {
+                item.classList.remove('collapsed');
+                const toggleIcon = item.querySelector('.collapse-toggle svg');
+                if (toggleIcon) {
+                    toggleIcon.style.transform = 'rotate(0)';
+                }
+            });
+            
+            // Add IDs to headings if they don't have them
+            document.querySelectorAll('h2, h3').forEach(heading => {
+                if (!heading.id) {
+                    const id = heading.textContent.toLowerCase()
+                        .replace(/[^\w\s-]/g, '')
+                        .replace(/\s+/g, '-');
+                    
+                    // Check if this is a specific heading we want to map to our predefined IDs
+                    if (heading.textContent === 'Getting Started') {
+                        heading.id = 'getting-started';
+                    } else if (heading.textContent === 'Inspector Assignment vs Runtime Access') {
+                        heading.id = 'inspector-assignment';
+                    } else if (heading.textContent === 'Get Functions') {
+                        heading.id = 'get-functions';
+                    } else if (heading.textContent === 'Audio Collections') {
+                        heading.id = 'audio-collections';
+                    } else if (heading.textContent === 'Available Functions' && heading.closest('.glass-card').querySelector('h2')?.textContent === 'Audio Collections') {
+                        heading.id = 'collections-functions';
+                    } else if (heading.textContent === 'Common Use Cases' && heading.closest('.glass-card').querySelector('h2')?.textContent === 'Audio Collections') {
+                        heading.id = 'collections-use-cases';
+                    } else if (heading.textContent === 'Single Sound') {
+                        heading.id = 'single-sound';
+                    } else if (heading.textContent === 'Creating a Single Sound') {
+                        heading.id = 'creating-single-sound';
+                    } else if (heading.textContent === 'Available Functions' && heading.closest('.glass-card').querySelector('h2')?.textContent === 'Single Sound') {
+                        heading.id = 'single-sound-functions';
+                    } else if (heading.textContent === 'Common Use Cases' && heading.closest('.glass-card').querySelector('h2')?.textContent === 'Single Sound') {
+                        heading.id = 'single-sound-use-cases';
+                    } else if (heading.textContent === 'Sounds from Groups') {
+                        heading.id = 'sounds-from-groups';
+                    } else if (heading.textContent === 'Available Functions' && heading.closest('.glass-card').querySelector('h2')?.textContent === 'Sounds from Groups') {
+                        heading.id = 'groups-functions';
+                    } else if (heading.textContent === 'Common Use Cases' && heading.closest('.glass-card').querySelector('h2')?.textContent === 'Sounds from Groups') {
+                        heading.id = 'groups-use-cases';
+                    } else if (heading.textContent === 'Best Practices') {
+                        heading.id = 'best-practices';
+                    } else if (heading.textContent === 'Example Usage') {
+                        heading.id = 'example-usage';
+                    } else if (heading.textContent === 'Key Controls') {
+                        heading.id = 'key-controls';
+                    } else {
+                        heading.id = id;
+                    }
+                }
+            });
+            
+            // Toggle sidebar on mobile
+            function toggleSidebar() {
+                sidebar.classList.toggle('active');
+                document.body.classList.toggle('sidebar-open');
+                
+                // If sidebar is open, add event listener to close it when clicking outside
+                if (sidebar.classList.contains('active')) {
+                    setTimeout(() => {
+                        document.addEventListener('click', closeSidebarOnClickOutside);
+                    }, 10);
+                } else {
+                    document.removeEventListener('click', closeSidebarOnClickOutside);
+                }
+            }
+            
+            function closeSidebarOnClickOutside(e) {
+                if (!sidebar.contains(e.target) && 
+                    e.target !== mobileSidebarToggle && 
+                    !mobileSidebarToggle.contains(e.target)) {
+                    sidebar.classList.remove('active');
+                    document.body.classList.remove('sidebar-open');
+                    document.removeEventListener('click', closeSidebarOnClickOutside);
+                }
+            }
+            
+            sidebarToggle.addEventListener('click', toggleSidebar);
+            mobileSidebarToggle.addEventListener('click', toggleSidebar);
+            sidebarBackdrop.addEventListener('click', toggleSidebar);
+            
+            // Toggle collapsible sections
+            collapseToggles.forEach(toggle => {
+                toggle.addEventListener('click', (e) => {
+                    e.preventDefault();
+                    e.stopPropagation();
+                    
+                    const navItem = toggle.closest('.nav-item');
+                    navItem.classList.toggle('collapsed');
+                    
+                    // Animate the rotation of the toggle icon
+                    const icon = toggle.querySelector('svg');
+                    if (navItem.classList.contains('collapsed')) {
+                        icon.style.transform = 'rotate(-90deg)';
+                    } else {
+                        icon.style.transform = 'rotate(0)';
+                    }
+                });
+            });
+            
+            // Make nav item headers also toggle their sections
+            document.querySelectorAll('.nav-item-header').forEach(header => {
+                header.addEventListener('click', (e) => {
+                    // Only toggle if the click wasn't on the link or the toggle button
+                    if (!e.target.closest('.nav-link') && !e.target.closest('.collapse-toggle')) {
+                        const navItem = header.closest('.nav-item');
+                        const toggle = navItem.querySelector('.collapse-toggle');
+                        
+                        if (toggle) {
+                            navItem.classList.toggle('collapsed');
+                            
+                            // Animate the rotation of the toggle icon
+                            const icon = toggle.querySelector('svg');
+                            if (navItem.classList.contains('collapsed')) {
+                                icon.style.transform = 'rotate(-90deg)';
+                            } else {
+                                icon.style.transform = 'rotate(0)';
+                            }
+                        }
+                    }
+                });
+            });
+            
+            // Search functionality
+            searchInput.addEventListener('input', (e) => {
+                const searchTerm = e.target.value.toLowerCase();
+                
+                if (searchTerm.length > 1) {
+                    // Expand all sections when searching
+                    navItems.forEach(item => {
+                        item.classList.remove('collapsed');
+                        const icon = item.querySelector('.collapse-toggle svg');
+                        if (icon) {
+                            icon.style.transform = 'rotate(0)';
+                        }
+                    });
+                    
+                    // Filter nav links
+                    navLinks.forEach(link => {
+                        const linkText = link.textContent.toLowerCase();
+                        const navItem = link.closest('.nav-item');
+                        const navSubitem = link.closest('.nav-subitem');
+                        
+                        if (linkText.includes(searchTerm)) {
+                            if (navSubitem) {
+                                navSubitem.style.display = 'flex';
+                                navItem.style.display = 'block';
+                            } else {
+                                navItem.style.display = 'block';
+                            }
+                            // Highlight matching text
+                            const regex = new RegExp(`(${searchTerm})`, 'gi');
+                            link.innerHTML = link.textContent.replace(regex, '<span class="highlight">$1</span>');
+                        } else {
+                            if (navSubitem) {
+                                navSubitem.style.display = 'none';
+                            } else if (!navItem.querySelector('.nav-subitem[style="display: flex;"]')) {
+                                navItem.style.display = 'none';
+                            }
+                        }
+                    });
+                } else {
+                    // Reset display when search is cleared
+                    navItems.forEach(item => {
+                        item.style.display = 'block';
+                    });
+                    
+                    document.querySelectorAll('.nav-subitem').forEach(subitem => {
+                        subitem.style.display = 'flex';
+                    });
+                    
+                    // Remove highlights
+                    navLinks.forEach(link => {
+                        link.innerHTML = link.textContent;
+                    });
+                }
+            });
+            
+            // Function to highlight a target element
+            function highlightTarget(element) {
+                // Remove any existing highlights
+                document.querySelectorAll('.highlight-target').forEach(el => {
+                    el.classList.remove('highlight-target');
+                });
+                
+                // Add highlight class to trigger animation
+                element.classList.add('highlight-target');
+                
+                // Remove class after animation completes
+                setTimeout(() => {
+                    element.classList.remove('highlight-target');
+                }, 2000);
+            }
+            
+            // Smooth scroll to section when clicking on nav links
+            navLinks.forEach(link => {
+                link.addEventListener('click', (e) => {
+                    e.preventDefault();
+                    
+                    const targetId = link.getAttribute('href').substring(1);
+                    const targetElement = document.getElementById(targetId);
+                    
+                    if (targetElement) {
+                        // Expand the parent item if it's collapsed
+                        const navItem = link.closest('.nav-item');
+                        if (navItem && navItem.classList.contains('collapsed')) {
+                            navItem.classList.remove('collapsed');
+                            const icon = navItem.querySelector('.collapse-toggle svg');
+                            if (icon) {
+                                icon.style.transform = 'rotate(0)';
+                            }
+                        }
+                        
+                        // Close sidebar on mobile after clicking a link
+                        if (window.innerWidth <= 1200) {
+                            sidebar.classList.remove('active');
+                            document.body.classList.remove('sidebar-open');
+                        }
+                        
+                        // Smooth scroll to the target section with offset
+                        const headerOffset = 30;
+                        const elementPosition = targetElement.getBoundingClientRect().top;
+                        const offsetPosition = elementPosition + window.pageYOffset - headerOffset;
+                        
+                        window.scrollTo({
+                            top: offsetPosition,
+                            behavior: 'smooth'
+                        });
+                        
+                        // Highlight the target after scrolling
+                        setTimeout(() => {
+                            highlightTarget(targetElement);
+                        }, 600);
+                        
+                        // Update active link
+                        updateActiveLink();
+                    }
+                });
+            });
+            
+            // Update active link based on scroll position
+            function updateActiveLink() {
+                const scrollPosition = window.scrollY;
+                
+                // Get all sections with IDs
+                const sections = document.querySelectorAll('h2[id], h3[id]');
+                
+                // Find the current section
+                let currentSection = null;
+                
+                sections.forEach(section => {
+                    if (section.offsetTop - 100 <= scrollPosition) {
+                        currentSection = section.id;
+                    }
+                });
+                
+                // Remove active class from all links
+                navLinks.forEach(link => {
+                    link.classList.remove('active');
+                });
+                
+                // Add active class to current link
+                if (currentSection) {
+                    const activeLink = document.querySelector(`.nav-link[href="#${currentSection}"]`);
+                    if (activeLink) {
+                        activeLink.classList.add('active');
+                        
+                        // Ensure the active link is visible in the sidebar
+                        const navItem = activeLink.closest('.nav-item');
+                        if (navItem && navItem.classList.contains('collapsed')) {
+                            navItem.classList.remove('collapsed');
+                            const icon = navItem.querySelector('.collapse-toggle svg');
+                            if (icon) {
+                                icon.style.transform = 'rotate(0)';
+                            }
+                        }
+                        
+                        // Scroll the sidebar to show the active link if needed
+                        const sidebarNav = document.querySelector('.sidebar-nav');
+                        const activeLinkRect = activeLink.getBoundingClientRect();
+                        const sidebarNavRect = sidebarNav.getBoundingClientRect();
+                        
+                        if (activeLinkRect.top < sidebarNavRect.top || activeLinkRect.bottom > sidebarNavRect.bottom) {
+                            activeLink.scrollIntoView({ behavior: 'smooth', block: 'center' });
+                        }
+                    }
+                }
+            }
+            
+            // Update active link on scroll
+            window.addEventListener('scroll', () => {
+                updateActiveLink();
+            });
+            
+            // Initial update of active link
+            updateActiveLink();
+            
+            // Add CSS for search highlighting
+            const style = document.createElement('style');
+            style.textContent = `
+                .highlight {
+                    background-color: rgba(255, 186, 8, 0.3);
+                    border-radius: 2px;
+                    padding: 0 2px;
+                    font-weight: 600;
+                }
+                
+                body.sidebar-open {
+                    overflow: hidden;
+                }
+                
+                @media (max-width: 1200px) {
+                    body.sidebar-open {
+                        overflow: hidden;
+                    }
+                }
+            `;
+            document.head.appendChild(style);
+            
+            // Mobile sidebar toggle - always stays visible
+            window.addEventListener('scroll', () => {
+                // Keep the button always visible
+                mobileSidebarToggle.style.transform = 'translateY(0)';
+            }, { passive: true });
+            
+            // Highlight active section based on URL hash
+            if (window.location.hash) {
+                const targetId = window.location.hash.substring(1);
+                const targetElement = document.getElementById(targetId);
+                
+                if (targetElement) {
+                    setTimeout(() => {
+                        // Smooth scroll to the target section with offset
+                        const headerOffset = 30;
+                        const elementPosition = targetElement.getBoundingClientRect().top;
+                        const offsetPosition = elementPosition + window.pageYOffset - headerOffset;
+                        
+                        window.scrollTo({
+                            top: offsetPosition,
+                            behavior: 'smooth'
+                        });
+                        
+                        // Highlight the target after scrolling
+                        setTimeout(() => {
+                            highlightTarget(targetElement);
+                        }, 600);
+                        
+                        // Update active link
+                        updateActiveLink();
+                    }, 300);
+                }
+            }
         });
     </script>
 
