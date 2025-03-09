@@ -1,0 +1,1183 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0, minimum-scale=1.0">
+    <title>Audio System Documentation</title>
+    <style>
+        :root {
+            /* Light theme variables */
+            --bg-color: #ffffff;
+            --text-color: #1a1a1a;
+            --button-bg: rgba(255, 255, 255, 0.8);
+            --button-border: rgba(0, 0, 0, 0.1);
+            --button-hover-border: rgba(0, 0, 0, 0.2);
+            --button-shadow: 0 2px 6px rgba(0, 0, 0, 0.05);
+            --card-bg: rgba(255, 255, 255, 0.7);
+            --dot-color: rgba(0, 0, 0, 0.1);
+            --code-bg: rgba(0, 0, 0, 0.03);
+            --code-border: rgba(0, 0, 0, 0.08);
+            --inline-code-color: #374151;
+            
+            /* Code syntax colors - Light theme */
+            --code-comment: #4B5563;
+            --code-keyword: #6D28D9;
+            --code-string: #047857;
+            --code-number: #0369A1;
+            --code-class: #B45309;
+            --code-function: #1D4ED8;
+            --code-operator: #111827;
+            --code-punctuation: #374151;
+        }
+
+        [data-theme="dark"] {
+            /* Dark theme variables */
+            --bg-color: #0a0a0a;
+            --text-color: #ffffff;
+            --button-bg: rgba(32, 32, 32, 0.8);
+            --button-border: rgba(255, 255, 255, 0.1);
+            --button-hover-border: rgba(255, 255, 255, 0.2);
+            --button-shadow: 0 2px 6px rgba(0, 0, 0, 0.2);
+            --card-bg: rgba(32, 32, 32, 0.7);
+            --dot-color: rgba(255, 255, 255, 0.1);
+            --code-bg: rgba(255, 255, 255, 0.05);
+            --code-border: rgba(255, 255, 255, 0.08);
+            --inline-code-color: #E5E7EB;
+            
+            /* Code syntax colors - Dark theme */
+            --code-comment: #848BAD;
+            --code-keyword: #A78BFA;
+            --code-string: #6EE7B7;
+            --code-number: #7DD3FC;
+            --code-class: #FCA5A5;
+            --code-function: #93C5FD;
+            --code-operator: #E2E8F0;
+            --code-punctuation: #CBD5E1;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: system-ui, -apple-system, sans-serif;
+        }
+
+        body {
+            background-color: var(--bg-color);
+            color: var(--text-color);
+            min-height: 100vh;
+            background-image: radial-gradient(var(--dot-color) 1.5px, transparent 1.5px);
+            background-size: 24px 24px;
+            transition: all 0.3s ease;
+            line-height: 1.6;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 2rem;
+            width: 100%;
+            box-sizing: border-box;
+        }
+
+        .glass-card {
+            background: var(--card-bg);
+            backdrop-filter: blur(12px);
+            -webkit-backdrop-filter: blur(12px);
+            border-radius: 1rem;
+            border: 1.5px solid var(--button-border);
+            padding: 2rem;
+            box-shadow: var(--button-shadow);
+            margin: 2rem 0;
+            overflow: hidden;
+        }
+
+        .button {
+            background: var(--button-bg);
+            backdrop-filter: blur(12px);
+            -webkit-backdrop-filter: blur(12px);
+            border: 1.5px solid var(--button-border);
+            border-radius: 2.5rem;
+            padding: 0.4rem 1rem;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            gap: 0.75rem;
+            color: var(--text-color);
+            font-size: 0.875rem;
+            font-weight: 500;
+            letter-spacing: 0.01em;
+            box-shadow: var(--button-shadow);
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+            height: 2.75rem;
+            justify-content: center;
+        }
+
+        .button:hover {
+            border-color: var(--button-hover-border);
+        }
+
+        .button:focus {
+            outline: none;
+        }
+
+        .theme-toggle {
+            position: fixed;
+            top: 1.5rem;
+            right: 1.5rem;
+            width: auto;
+            min-width: 7rem;
+            z-index: 100;
+        }
+
+        .theme-toggle svg {
+            width: 1.15rem;
+            height: 1.15rem;
+            stroke: currentColor;
+            stroke-width: 2;
+            stroke-linecap: round;
+            stroke-linejoin: round;
+        }
+
+        /* Theme icon visibility */
+        .theme-toggle .sun-icon {
+            display: none;
+        }
+
+        .theme-toggle .moon-icon {
+            display: none;
+        }
+
+        [data-theme="light"] .theme-toggle .sun-icon {
+            display: block;
+        }
+
+        [data-theme="dark"] .theme-toggle .moon-icon {
+            display: block;
+        }
+
+        h1 {
+            font-size: 2.5rem;
+            font-weight: 700;
+            margin-bottom: 1rem;
+            letter-spacing: -0.025em;
+        }
+
+        h2 {
+            font-size: 1.75rem;
+            font-weight: 600;
+            margin: 2rem 0 1rem;
+            letter-spacing: -0.025em;
+        }
+
+        h3 {
+            font-size: 1.25rem;
+            font-weight: 600;
+            margin: 1.5rem 0 0.75rem;
+            letter-spacing: -0.025em;
+        }
+
+        p {
+            font-size: 1rem;
+            line-height: 1.6;
+            color: var(--text-color);
+            opacity: 0.9;
+            margin-bottom: 1rem;
+        }
+
+        code {
+            font-family: ui-monospace, 'JetBrains Mono', 'Cascadia Code', 'Source Code Pro', Menlo, monospace;
+            background: var(--code-bg);
+            padding: 0.2em 0.4em;
+            border-radius: 0.3em;
+            font-size: 0.9em;
+            border: 1px solid var(--code-border);
+            color: var(--inline-code-color);
+            font-weight: 500;
+            letter-spacing: -0.01em;
+            transition: all 0.2s ease;
+            box-shadow: 0 1px 2px rgba(0, 0, 0, 0.02);
+            margin: 0 0.2em;
+        }
+
+        code:hover {
+            border-color: var(--button-hover-border);
+            background: var(--code-bg);
+        }
+
+        pre {
+            background: var(--code-bg);
+            padding: 1rem;
+            border-radius: 0.5rem;
+            overflow-x: auto;
+            border: 1px solid var(--code-border);
+            margin: 1rem 0;
+        }
+
+        pre code {
+            background: none;
+            padding: 0;
+            border: none;
+            font-size: 0.875rem;
+            color: inherit;
+            margin: 0;
+            box-shadow: none;
+            font-weight: normal;
+            letter-spacing: normal;
+        }
+
+        pre code:hover {
+            border: none;
+            box-shadow: none;
+        }
+
+        ul {
+            list-style-type: none;
+            padding-left: 1.5rem;
+            margin: 1rem 0;
+        }
+
+        li {
+            position: relative;
+            margin-bottom: 0.5rem;
+        }
+
+        li::before {
+            content: "•";
+            position: absolute;
+            left: -1.5rem;
+            color: var(--text-color);
+            opacity: 0.5;
+        }
+
+        .method {
+            margin-bottom: 2rem;
+        }
+
+        .method-signature {
+            font-weight: 500;
+            margin-bottom: 0.5rem;
+        }
+
+        .parameter {
+            margin-left: 1.5rem;
+            margin-bottom: 0.25rem;
+        }
+
+        .parameter-name {
+            font-weight: 500;
+            color: var(--text-color);
+        }
+
+        .code-block {
+            position: relative;
+            margin: 1rem 0;
+            background: var(--code-bg);
+            border-radius: 0.75rem;
+            overflow: hidden;
+            border: 1px solid var(--code-border);
+            max-width: 100%;
+        }
+
+        .code-header {
+            display: flex;
+            align-items: center;
+            padding: 0.75rem 1rem;
+            background: var(--button-bg);
+            border-bottom: 1px solid var(--code-border);
+            position: relative;
+        }
+
+        .window-controls {
+            display: flex;
+            gap: 0.375rem;
+            position: absolute;
+            left: 1rem;
+        }
+
+        .window-control {
+            width: 0.75rem;
+            height: 0.75rem;
+            border-radius: 50%;
+            border: none;
+        }
+
+        .window-close {
+            background: #ff5f56;
+        }
+
+        .window-minimize {
+            background: #ffbd2e;
+        }
+
+        .window-maximize {
+            background: #27c93f;
+        }
+
+        .code-title {
+            font-size: 0.8125rem;
+            color: var(--text-color);
+            opacity: 0.8;
+            width: 100%;
+            text-align: center;
+            font-family: ui-monospace, 'Cascadia Code', 'Source Code Pro', Menlo, monospace;
+            letter-spacing: 0.5px;
+        }
+
+        .copy-button {
+            position: absolute;
+            right: 1rem;
+            background: transparent;
+            border: none;
+            padding: 0.25rem;
+            color: var(--text-color);
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            gap: 0.375rem;
+            font-size: 0.75rem;
+            opacity: 0.6;
+            transition: all 0.2s ease;
+        }
+
+        .copy-button:hover {
+            opacity: 1;
+        }
+
+        .copy-button svg {
+            width: 1rem;
+            height: 1rem;
+            stroke: currentColor;
+            stroke-width: 2;
+            transition: all 0.2s ease;
+        }
+
+        .copy-button.copied {
+            color: #27c93f;
+            opacity: 1;
+        }
+
+        .copy-button.copied svg {
+            stroke: #27c93f;
+            animation: checkmark 0.2s ease-in-out;
+        }
+
+        @keyframes checkmark {
+            0% {
+                transform: scale(1);
+            }
+            50% {
+                transform: scale(1.2);
+            }
+            100% {
+                transform: scale(1);
+            }
+        }
+
+        .code-content {
+            padding: 1rem;
+            position: relative;
+            overflow-x: auto;
+            max-width: 100%;
+        }
+
+        .code-content pre {
+            margin: 0;
+            padding: 0;
+            background: none;
+            border: none;
+            white-space: pre-wrap;
+            word-break: break-word;
+        }
+
+        .code-content code {
+            font-family: ui-monospace, 'Cascadia Code', 'Source Code Pro', Menlo, monospace;
+            font-size: 0.875rem;
+            line-height: 1.5;
+        }
+
+        /* Override Prism.js default styles */
+        code[class*="language-"],
+        pre[class*="language-"] {
+            color: var(--text-color);
+            background: none;
+            font-family: ui-monospace, 'Cascadia Code', 'Source Code Pro', Menlo, monospace;
+            font-size: 0.875rem;
+            text-align: left;
+            white-space: pre;
+            word-spacing: normal;
+            word-break: normal;
+            word-wrap: normal;
+            line-height: 1.5;
+            tab-size: 4;
+            hyphens: none;
+        }
+
+        /* Ensure our theme colors are applied */
+        .token.comment,
+        .token.prolog,
+        .token.doctype,
+        .token.cdata {
+            color: var(--code-comment) !important;
+        }
+
+        .token.punctuation {
+            color: var(--code-punctuation) !important;
+        }
+
+        .token.namespace {
+            opacity: .7;
+        }
+
+        .token.property,
+        .token.tag,
+        .token.boolean,
+        .token.number,
+        .token.constant,
+        .token.symbol,
+        .token.deleted {
+            color: var(--code-number) !important;
+        }
+
+        .token.selector,
+        .token.attr-name,
+        .token.string,
+        .token.char,
+        .token.builtin,
+        .token.inserted {
+            color: var(--code-string) !important;
+        }
+
+        .token.operator,
+        .token.entity,
+        .token.url,
+        .language-css .token.string,
+        .style .token.string {
+            color: var(--code-operator) !important;
+        }
+
+        .token.atrule,
+        .token.attr-value,
+        .token.keyword {
+            color: var(--code-keyword) !important;
+        }
+
+        .token.function,
+        .token.class-name {
+            color: var(--code-function) !important;
+        }
+
+        .token.regex,
+        .token.important,
+        .token.variable {
+            color: var(--code-class) !important;
+        }
+
+        /* Unity Asset Store Button Styles */
+        .unity-store-button {
+            position: fixed;
+            bottom: 2rem;
+            right: 2rem;
+            background: #1a73e8;
+            color: white;
+            border-radius: 2rem;
+            padding: 0.5rem 2.25rem 0.5rem 2rem;
+            display: flex;
+            align-items: center;
+            gap: 0.6rem;
+            font-size: 0.85rem;
+            font-weight: 600;
+            text-decoration: none;
+            box-shadow: 0 4px 8px rgba(26, 115, 232, 0.25);
+            transition: all 0.2s ease;
+            z-index: 100;
+            border: none;
+            letter-spacing: 0.05em;
+            white-space: nowrap;
+        }
+
+        /* Remove the accent border */
+        .unity-store-button::after {
+            display: none;
+        }
+
+        [data-theme="light"] .unity-store-button {
+            background: #1a73e8;
+        }
+
+        [data-theme="dark"] .unity-store-button {
+            background: #2684ff;
+        }
+
+        .unity-store-button:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 12px rgba(26, 115, 232, 0.35);
+            background: #0d62d9;
+        }
+
+        [data-theme="dark"] .unity-store-button:hover {
+            background: #1a73e8;
+        }
+
+        .unity-store-button .store-icon {
+            width: 1.2rem;
+            height: 1.2rem;
+            transition: transform 0.2s ease;
+            color: white;
+            margin-left: 0.1rem;
+        }
+
+        .unity-store-button:hover .store-icon {
+            transform: translateX(2px);
+        }
+
+        .unity-store-button .button-text {
+            position: relative;
+        }
+
+        /* Small mobile devices - portrait orientation */
+        @media (max-width: 480px) and (orientation: portrait) {
+            .unity-store-button {
+                left: 50%;
+                right: auto;
+                transform: translateX(-50%);
+                bottom: 1rem;
+                padding: 0.4rem 1.5rem;
+            }
+            
+            .unity-store-button:hover {
+                transform: translateX(-50%) translateY(-2px);
+            }
+        }
+
+        /* Improved mobile responsiveness */
+        @media (max-width: 768px) {
+            .container {
+                padding: 1.5rem 1rem;
+            }
+
+            h1 {
+                font-size: 2rem;
+            }
+
+            h2 {
+                font-size: 1.5rem;
+            }
+
+            h3 {
+                font-size: 1.15rem;
+            }
+
+            .glass-card {
+                padding: 1.5rem;
+                margin: 1.5rem 0;
+            }
+
+            .code-block {
+                margin: 0.75rem 0;
+            }
+
+            .code-header {
+                padding: 0.5rem 0.75rem;
+            }
+
+            .code-content {
+                padding: 0.75rem;
+            }
+
+            .code-content code {
+                font-size: 0.8rem;
+            }
+
+            .button {
+                height: 2.5rem;
+            }
+
+            .theme-toggle {
+                top: 1rem;
+                right: 1rem;
+                min-width: auto;
+                padding: 0.4rem 0.75rem;
+            }
+
+            .theme-toggle span {
+                display: none;
+            }
+
+            .theme-toggle svg {
+                margin-right: 0;
+            }
+
+            .unity-store-button {
+                bottom: 1.25rem;
+                right: 1.25rem;
+                padding: 0.45rem 1.5rem;
+                font-size: 0.8rem;
+                border-radius: 1.5rem;
+            }
+            
+            .unity-store-button .store-icon {
+                width: 1rem;
+                height: 1rem;
+            }
+        }
+
+        /* Small mobile devices */
+        @media (max-width: 480px) {
+            .container {
+                padding: 1.25rem 0.75rem;
+            }
+
+            h1 {
+                font-size: 1.75rem;
+            }
+
+            .glass-card {
+                padding: 1.25rem;
+                margin: 1.25rem 0;
+                border-radius: 0.75rem;
+            }
+
+            .unity-store-button {
+                bottom: 1rem;
+                right: 1rem;
+                padding: 0.4rem 1.25rem;
+                font-size: 0.75rem;
+            }
+
+            .method {
+                margin-bottom: 1.5rem;
+            }
+
+            .parameter {
+                margin-left: 1rem;
+            }
+
+            .code-header .window-controls {
+                display: none;
+            }
+
+            .code-title {
+                font-size: 0.75rem;
+            }
+
+            .copy-button {
+                padding: 0.2rem;
+            }
+
+            .copy-button svg {
+                width: 0.9rem;
+                height: 0.9rem;
+            }
+
+            pre code {
+                font-size: 0.8rem;
+                line-height: 1.4;
+            }
+            
+            .code-content {
+                padding: 0.75rem 0.5rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <button class="button theme-toggle" aria-label="Toggle theme" role="switch" aria-checked="false">
+        <svg class="sun-icon" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor">
+            <circle cx="12" cy="12" r="5"></circle>
+            <line x1="12" y1="1" x2="12" y2="3"></line>
+            <line x1="12" y1="21" x2="12" y2="23"></line>
+            <line x1="4.22" y1="4.22" x2="5.64" y2="5.64"></line>
+            <line x1="18.36" y1="18.36" x2="19.78" y2="19.78"></line>
+            <line x1="1" y1="12" x2="3" y2="12"></line>
+            <line x1="21" y1="12" x2="23" y2="12"></line>
+            <line x1="4.22" y1="19.78" x2="5.64" y2="18.36"></line>
+            <line x1="18.36" y1="5.64" x2="19.78" y2="4.22"></line>
+        </svg>
+        <svg class="moon-icon" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor">
+            <path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"></path>
+        </svg>
+        <span>Theme</span>
+    </button>
+
+    <div class="container">
+        <div class="glass-card" style="background: rgba(255, 186, 8, 0.1); border-color: rgba(255, 186, 8, 0.3); padding: 1rem;">
+            <p style="margin: 0; display: flex; align-items: center; gap: 0.5rem;">
+                <span style="background: rgba(255, 186, 8, 0.2); color: var(--text-color); padding: 0.25rem 0.75rem; border-radius: 1rem; font-size: 0.875rem; font-weight: 500;">BETA</span>
+                <span style="opacity: 0.8;">This audio system is currently in beta. Features and APIs may change in future updates.</span>
+            </p>
+        </div>
+
+        <div class="glass-card">
+            <h1>Audio System Documentation</h1>
+            <p>A powerful and flexible audio management system for Unity, featuring sound collections, individual sounds, and advanced audio control capabilities.</p>
+        </div>
+
+        <div class="glass-card">
+            <h2>Getting Started</h2>
+            <p>First, make sure to include the Audio System namespace in your scripts:</p>
+
+            <div class="code-block">
+                <div class="code-header">
+                    <div class="window-controls">
+                        <div class="window-control window-close"></div>
+                        <div class="window-control window-minimize"></div>
+                        <div class="window-control window-maximize"></div>
+                    </div>
+                    <div class="code-title">Namespace</div>
+                    <button class="copy-button" aria-label="Copy code">
+                        <svg class="copy-icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor">
+                            <rect x="9" y="9" width="13" height="13" rx="2" ry="2"></rect>
+                            <path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path>
+                        </svg>
+                        <svg class="check-icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" style="display: none;">
+                            <path d="M20 6L9 17l-5-5"></path>
+                        </svg>
+                    </button>
+                </div>
+                <div class="code-content">
+                    <pre><code class="language-csharp">using UnityEngine;
+using HawaHawa.AudioSystem;</code></pre>
+                </div>
+            </div>
+
+            <p>The Audio System provides three main ways to manage sounds in your Unity project:</p>
+            <ul>
+                <li><code>AudioCollection</code> - Manage groups of related sounds</li>
+                <li><code>SingleSound</code> - Control individual sound effects</li>
+                <li><code>SoundFromGroup</code> - Access specific sounds within collections</li>
+            </ul>
+
+            <div class="code-block">
+                <div class="code-header">
+                    <div class="window-controls">
+                        <div class="window-control window-close"></div>
+                        <div class="window-control window-minimize"></div>
+                        <div class="window-control window-maximize"></div>
+                    </div>
+                    <div class="code-title">Example Fields</div>
+                    <button class="copy-button" aria-label="Copy code">
+                        <svg class="copy-icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor">
+                            <rect x="9" y="9" width="13" height="13" rx="2" ry="2"></rect>
+                            <path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path>
+                        </svg>
+                        <svg class="check-icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" style="display: none;">
+                            <path d="M20 6L9 17l-5-5"></path>
+                        </svg>
+                    </button>
+                </div>
+                <div class="code-content">
+                    <pre><code class="language-csharp">public AudioCollection musicCollection;    // For managing background music
+public SingleSound jumpSound;           // For a specific sound effect
+public SoundFromGroup footsteps;        // For accessing a specific sound in a group</code></pre>
+                </div>
+            </div>
+
+            <h3>Inspector Assignment vs Runtime Access</h3>
+            <p>Audio components can be assigned in two ways:</p>
+            <ul>
+                <li>Using <code>[SerializeField]</code> or public fields for inspector assignment</li>
+                <li>Using Get functions for runtime access when fields are private or need to be accessed dynamically</li>
+            </ul>
+
+            <div class="code-block">
+                <div class="code-header">
+                    <div class="window-controls">
+                        <div class="window-control window-close"></div>
+                        <div class="window-control window-minimize"></div>
+                        <div class="window-control window-maximize"></div>
+                    </div>
+                    <div class="code-title">Inspector Assignment</div>
+                    <button class="copy-button" aria-label="Copy code">
+                        <svg class="copy-icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor">
+                            <rect x="9" y="9" width="13" height="13" rx="2" ry="2"></rect>
+                            <path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path>
+                        </svg>
+                        <svg class="check-icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" style="display: none;">
+                            <path d="M20 6L9 17l-5-5"></path>
+                        </svg>
+                    </button>
+                </div>
+                <div class="code-content">
+                    <pre><code class="language-csharp">[SerializeField] private AudioCollection musicCollection;    // Visible in inspector
+[SerializeField] private SingleSound jumpSound;           // Visible in inspector
+[SerializeField] private SoundFromGroup footsteps;        // Visible in inspector</code></pre>
+                </div>
+            </div>
+
+            <h3>Get Functions</h3>
+            <p>When you need to access audio components at runtime or can't assign them through the inspector, use these Get functions:</p>
+            
+            <div class="method">
+                <div class="method-signature">
+                    <code>AudioSystem.GetAudioCollection(string collectionName)</code>
+                    <p>Retrieves an audio collection by its name. Use this for managing groups of related sounds like background music, ambient sounds, or character voice lines.</p>
+                </div>
+
+                <div class="method-signature">
+                    <code>AudioSystem.GetSingleSound(string soundName)</code>
+                    <p>Retrieves an individual sound by its name. Perfect for one-off sound effects that don't belong to a collection.</p>
+                </div>
+
+                <div class="method-signature">
+                    <code>AudioSystem.GetSoundFromGroup(string groupName, string soundName)</code>
+                    <p>Retrieves a specific sound from a named group. Useful when you need direct access to one sound within a collection.</p>
+                </div>
+            </div>
+
+            <div class="code-block">
+                <div class="code-header">
+                    <div class="window-controls">
+                        <div class="window-control window-close"></div>
+                        <div class="window-control window-minimize"></div>
+                        <div class="window-control window-maximize"></div>
+                    </div>
+                    <div class="code-title">Runtime Access</div>
+                    <button class="copy-button" aria-label="Copy code">
+                        <svg class="copy-icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor">
+                            <rect x="9" y="9" width="13" height="13" rx="2" ry="2"></rect>
+                            <path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path>
+                        </svg>
+                        <svg class="check-icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" style="display: none;">
+                            <path d="M20 6L9 17l-5-5"></path>
+                        </svg>
+                    </button>
+                </div>
+                <div class="code-content">
+                    <pre><code class="language-csharp">AudioCollection musicCollection = AudioSystem.GetAudioCollection("BackgroundMusic");
+SingleSound jumpSound = AudioSystem.GetSingleSound("PlayerJump");
+SoundFromGroup footsteps = AudioSystem.GetSoundFromGroup("PlayerSounds", "Footsteps");</code></pre>
+                </div>
+            </div>
+        </div>
+
+        <div class="glass-card">
+            <h2>Audio Collections</h2>
+            <p>Audio Collections are containers that manage multiple audio clips as a group. They provide functionality for playing, stopping, and manipulating multiple related sounds from a single container. Each collection can hold multiple audio clips and provides methods for both specific and random playback.</p>
+
+            <div class="code-block">
+                <div class="code-header">
+                    <div class="window-controls">
+                        <div class="window-control window-close"></div>
+                        <div class="window-control window-minimize"></div>
+                        <div class="window-control window-maximize"></div>
+                    </div>
+                    <div class="code-title">Creating an Audio Collection</div>
+                    <button class="copy-button" aria-label="Copy code">
+                        <svg class="copy-icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor">
+                            <rect x="9" y="9" width="13" height="13" rx="2" ry="2"></rect>
+                            <path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path>
+                        </svg>
+                        <svg class="check-icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" style="display: none;">
+                            <path d="M20 6L9 17l-5-5"></path>
+                        </svg>
+                    </button>
+                </div>
+                <div class="code-content">
+                    <pre><code class="language-csharp">public AudioCollection sfxCollection;</code></pre>
+                </div>
+            </div>
+
+            <h3>Available Functions</h3>
+            <div class="method">
+                <p><code>sfxCollection.Play(string soundName)</code> - Plays a specific sound from the collection using its name.</p>
+                <p><code>sfxCollection.Play(string soundName, float volume, float pitch)</code> - Plays a sound with custom volume (0-1) and pitch settings.</p>
+                <p><code>sfxCollection.PlayRandomPitch(string soundName, float minPitch, float maxPitch)</code> - Plays a specific sound with random pitch between min and max values.</p>
+                <p><code>sfxCollection.Stop(string soundName)</code> - Stops playback of a specific sound in the collection.</p>
+                <p><code>sfxCollection.PlayRandomAudio()</code> - Plays a random sound from the entire collection.</p>
+            </div>
+
+            <h3>Common Use Cases</h3>
+            <ul>
+                <li>Background Music Collections: Managing different tracks for various game states or levels</li>
+                <li>Character Sound Effects: Grouping voice lines, footsteps, or action sounds</li>
+                <li>UI Sound Collections: Managing button clicks, hover sounds, and menu transitions</li>
+                <li>Ambient Sound Groups: Organizing environmental sounds like weather, nature, or atmosphere</li>
+                <li>Combat Sound Effects: Grouping weapon sounds, impact effects, or ability sounds</li>
+                <li>Vehicle Sound Collections: Managing engine sounds, horns, or impact effects</li>
+                <li>NPC Voice Collections: Organizing dialogue or reaction sounds for characters</li>
+                <li>Achievement/Reward Sounds: Managing positive feedback sounds for player accomplishments</li>
+            </ul>
+        </div>
+
+        <div class="glass-card">
+            <h2>Single Sound</h2>
+            <p>Use SingleSound for managing standalone sound effects that aren't part of a collection.</p>
+
+            <div class="method">
+                <h3>Creating a Single Sound</h3>
+                <div class="code-block">
+                    <div class="code-header">
+                        <div class="window-controls">
+                            <div class="window-control window-close"></div>
+                            <div class="window-control window-minimize"></div>
+                            <div class="window-control window-maximize"></div>
+                        </div>
+                        <div class="code-title">SingleSound Example</div>
+                        <button class="copy-button" aria-label="Copy code">
+                            <svg class="copy-icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor">
+                                <rect x="9" y="9" width="13" height="13" rx="2" ry="2"></rect>
+                                <path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path>
+                            </svg>
+                            <svg class="check-icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" style="display: none;">
+                                <path d="M20 6L9 17l-5-5"></path>
+                            </svg>
+                        </button>
+                    </div>
+                    <div class="code-content">
+                        <pre><code class="language-csharp">public SingleSound singleSound;</code></pre>
+                    </div>
+                </div>
+            </div>
+
+            <div class="method">
+                <h3>Available Functions</h3>
+                <p><code>singleSound.Play()</code> - Plays the individual sound with default settings.</p>
+                <p><code>singleSound.Play(float volume, float pitch)</code> - Plays the sound with custom volume and pitch settings.</p>
+                <p><code>singleSound.PlayRandomPitch(float minPitch, float maxPitch)</code> - Plays the sound with random pitch between min and max values.</p>
+                <p><code>singleSound.Stop()</code> - Stops playback of the sound.</p>
+                <p><code>singleSound.FadeIn(float duration, float targetVolume)</code> - Gradually increases volume over duration to target volume.</p>
+                <p><code>singleSound.FadeOut(float duration)</code> - Gradually decreases volume over duration.</p>
+                <p><code>singleSound.Pause()</code> - Pauses playback of the sound.</p>
+                <p><code>singleSound.Resume()</code> - Resumes playback of a paused sound.</p>
+            </div>
+
+            <h3>Common Use Cases</h3>
+            <ul>
+                <li>One-shot Sound Effects: Jump sounds, attack impacts, item pickups</li>
+                <li>UI Feedback: Button clicks, notification alerts, error sounds</li>
+                <li>Character Actions: Dash sounds, special ability activations</li>
+                <li>Environmental Triggers: Door opening/closing, lever pulls, switches</li>
+                <li>Achievement Unlocks: Single celebration sounds, level completion jingles</li>
+                <li>Game Events: Countdown timers, round start/end signals</li>
+                <li>Menu Navigation: Selection confirms, back button sounds</li>
+                <li>Status Changes: Health pickup, power-up activation, shield break</li>
+            </ul>
+        </div>
+
+        <div class="glass-card">
+            <h2>Sounds from Groups</h2>
+            <p>SoundFromGroup provides direct access to specific sounds within collections, offering granular control over individual sounds while maintaining the organizational benefits of collections.</p>
+
+            <div class="code-block">
+                <div class="code-header">
+                    <div class="window-controls">
+                        <div class="window-control window-close"></div>
+                        <div class="window-control window-minimize"></div>
+                        <div class="window-control window-maximize"></div>
+                    </div>
+                    <div class="code-title">Creating a Sound from Group</div>
+                    <button class="copy-button" aria-label="Copy code">
+                        <svg class="copy-icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor">
+                            <rect x="9" y="9" width="13" height="13" rx="2" ry="2"></rect>
+                            <path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path>
+                        </svg>
+                        <svg class="check-icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" style="display: none;">
+                            <path d="M20 6L9 17l-5-5"></path>
+                        </svg>
+                    </button>
+                </div>
+                <div class="code-content">
+                    <pre><code class="language-csharp">public SoundFromGroup groupSound;</code></pre>
+                </div>
+            </div>
+
+            <h3>Available Functions</h3>
+            <div class="method">
+                <p><code>groupSound.Play()</code> - Plays the specific sound from its group with default settings.</p>
+                <p><code>groupSound.Play(float volume, float pitch)</code> - Plays the sound with custom volume (0-1) and pitch settings.</p>
+                <p><code>groupSound.PlayRandomPitch(float minPitch, float maxPitch)</code> - Plays the sound with random pitch between min and max values.</p>
+                <p><code>groupSound.Stop()</code> - Stops playback of the sound.</p>
+                <p><code>groupSound.FadeIn(float duration, float targetVolume)</code> - Gradually increases volume over duration to target volume.</p>
+                <p><code>groupSound.FadeOut(float duration)</code> - Gradually decreases volume over duration.</p>
+                <p><code>groupSound.Pause()</code> - Pauses playback of the sound.</p>
+                <p><code>groupSound.Resume()</code> - Resumes playback of a paused sound.</p>
+            </div>
+
+            <h3>Common Use Cases</h3>
+            <ul>
+                <li>Character Voice Lines: Managing specific dialogue options from a character's voice collection</li>
+                <li>Weapon Variations: Controlling individual weapon sounds from a weapons sound collection</li>
+                <li>Music Tracks: Managing specific background music tracks from a music collection</li>
+                <li>Environmental Effects: Controlling individual ambient sounds from an environment collection</li>
+                <li>Vehicle Components: Managing specific vehicle sounds (engine, horn, brakes) from a vehicle sound collection</li>
+                <li>UI Element Sounds: Controlling specific UI sounds from a UI sound collection</li>
+                <li>Footstep Variations: Managing specific footstep sounds for different surfaces</li>
+                <li>Impact Effects: Controlling specific impact sounds from a collection of collision effects</li>
+            </ul>
+        </div>
+
+        <div class="glass-card">
+            <h2>Best Practices</h2>
+            <ul>
+                <li>Use AudioCollections for related sounds (e.g., footsteps, UI sounds)</li>
+                <li>Use SingleSound for unique, standalone effects</li>
+                <li>Implement FadeIn/FadeOut for smooth transitions</li>
+                <li>Use PlayRandomPitch for natural variation in repetitive sounds</li>
+                <li>Group similar sounds in collections for better organization</li>
+            </ul>
+        </div>
+
+        <div class="glass-card">
+            <h2>Example Usage</h2>
+            <div class="code-block">
+                <div class="code-header">
+                    <div class="window-controls">
+                        <div class="window-control window-close"></div>
+                        <div class="window-control window-minimize"></div>
+                        <div class="window-control window-maximize"></div>
+                    </div>
+                    <div class="code-title">AudioManager.cs</div>
+                    <button class="copy-button" aria-label="Copy code">
+                        <svg class="copy-icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor">
+                            <rect x="9" y="9" width="13" height="13" rx="2" ry="2"></rect>
+                            <path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path>
+                        </svg>
+                        <svg class="check-icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" style="display: none;">
+                            <path d="M20 6L9 17l-5-5"></path>
+                        </svg>
+                    </button>
+                </div>
+                <div class="code-content">
+                    <pre><code class="language-csharp">using UnityEngine;
+using HawaHawa.AudioSystem;
+
+public class AudioManager : MonoBehaviour
+{
+    // Audio components
+    [SerializeField] private SingleSound playerJumpSound;
+    [SerializeField] private AudioCollection musicCollection;
+    [SerializeField] private SoundFromGroup footstepSound;
+
+    private void Update()
+    {
+        // SingleSound example - Space key for jump sound
+        if (Input.GetKeyDown(KeyCode.Space))
+        {
+            playerJumpSound.PlayRandomPitch(0.9f, 1.1f);
+        }
+
+        // AudioCollection example - M key for music control
+        if (Input.GetKeyDown(KeyCode.M))
+        {
+            musicCollection.Play("MainTheme", 0.8f, 1.0f);
+        }
+        else if (Input.GetKeyDown(KeyCode.N))
+        {
+            musicCollection.Stop("MainTheme");
+        }
+
+        // SoundFromGroup example - F key for footstep with fade
+        if (Input.GetKeyDown(KeyCode.F))
+        {
+            footstepSound.FadeIn(0.5f, 1.0f);
+        }
+        else if (Input.GetKeyUp(KeyCode.F))
+        {
+            footstepSound.FadeOut(0.3f);
+        }
+
+        // Additional controls
+        if (Input.GetKeyDown(KeyCode.R))
+        {
+            // Play random sound from collection
+            musicCollection.PlayRandomAudio();
+        }
+
+        if (Input.GetKeyDown(KeyCode.P))
+        {
+            // Pause/Resume footstep sound
+            if (Input.GetKey(KeyCode.LeftShift))
+                footstepSound.Resume();
+            else
+                footstepSound.Pause();
+        }
+    }
+}</code></pre>
+                </div>
+            </div>
+
+            <h3>Key Controls</h3>
+            <ul>
+                <li><code>Space</code> - Plays jump sound with random pitch variation</li>
+                <li><code>M</code> - Plays main theme from music collection</li>
+                <li><code>N</code> - Stops main theme</li>
+                <li><code>F</code> (Hold) - Fades in footstep sound, fades out when released</li>
+                <li><code>R</code> - Plays a random sound from the music collection</li>
+                <li><code>P</code> - Pauses footstep sound</li>
+                <li><code>Shift + P</code> - Resumes footstep sound</li>
+            </ul>
+        </div>
+
+        <div class="glass-card" style="background: rgba(88, 101, 242, 0.1); border-color: rgba(88, 101, 242, 0.3); padding: 1.5rem;">
+            <div style="display: flex; align-items: center; gap: 1rem;">
+                <svg width="24" height="24" viewBox="0 0 24 24" fill="currentColor" style="color: #5865F2;">
+                    <path d="M19.27 5.33C17.94 4.71 16.5 4.26 15 4a.09.09 0 0 0-.07.03c-.18.33-.39.76-.53 1.09a16.09 16.09 0 0 0-4.8 0c-.14-.34-.35-.76-.54-1.09c-.01-.02-.04-.03-.07-.03c-1.5.26-2.93.71-4.27 1.33c-.01 0-.02.01-.03.02c-2.72 4.07-3.47 8.03-3.1 11.95c0 .02.01.04.03.05c1.8 1.32 3.53 2.12 5.24 2.65c.03.01.06 0 .07-.02c.4-.55.76-1.13 1.07-1.74c.02-.04 0-.08-.04-.09c-.57-.22-1.11-.48-1.64-.78c-.04-.02-.04-.08-.01-.11c.11-.08.22-.17.33-.25c.02-.02.05-.02.07-.01c3.44 1.57 7.15 1.57 10.55 0c.02-.01.05-.01.07.01c.11.09.22.17.33.26c.04.03.04.09-.01.11c-.52.31-1.07.56-1.64.78c-.04.01-.05.06-.04.09c.32.61.68 1.19 1.07 1.74c.03.01.06.02.09.01c1.72-.53 3.45-1.33 5.25-2.65c.02-.01.03-.03.03-.05c.44-4.53-.73-8.46-3.1-11.95c-.01-.01-.02-.02-.04-.02zM8.52 14.91c-1.03 0-1.89-.95-1.89-2.12s.84-2.12 1.89-2.12c1.06 0 1.9.96 1.89 2.12c0 1.17-.84 2.12-1.89 2.12zm6.97 0c-1.03 0-1.89-.95-1.89-2.12s.84-2.12 1.89-2.12c1.06 0 1.9.96 1.89 2.12c0 1.17-.83 2.12-1.89 2.12z"/>
+                </svg>
+                <div>
+                    <h3 style="margin: 0 0 0.5rem 0;">Need Help?</h3>
+                    <p style="margin: 0;">Join our Discord community for support, updates, and discussions: <a href="https://discord.gg/FqDf8546xh" style="color: #5865F2; text-decoration: none; font-weight: 500;">discord.gg/FqDf8546xh</a></p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.24.1/prism.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.24.1/components/prism-csharp.min.js"></script>
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            const toggle = document.querySelector('.theme-toggle');
+            const prefersDark = window.matchMedia('(prefers-color-scheme: dark)');
+            
+            const updateTheme = (isDark) => {
+                document.documentElement.setAttribute('data-theme', isDark ? 'dark' : 'light');
+                toggle.setAttribute('aria-checked', isDark);
+            };
+
+            // Set initial theme based on system preference
+            updateTheme(prefersDark.matches);
+
+            toggle.addEventListener('click', () => {
+                const currentTheme = document.documentElement.getAttribute('data-theme');
+                updateTheme(currentTheme !== 'dark');
+            });
+
+            // Listen for system theme changes
+            prefersDark.addEventListener('change', (e) => {
+                updateTheme(e.matches);
+            });
+
+            // Add copy functionality
+            document.querySelectorAll('.copy-button').forEach(button => {
+                button.addEventListener('click', () => {
+                    const codeBlock = button.closest('.code-block').querySelector('code');
+                    const text = codeBlock.textContent;
+                    
+                    navigator.clipboard.writeText(text).then(() => {
+                        button.classList.add('copied');
+                        const copyIcon = button.querySelector('.copy-icon');
+                        const checkIcon = button.querySelector('.check-icon');
+                        
+                        copyIcon.style.display = 'none';
+                        checkIcon.style.display = 'block';
+                        
+                        setTimeout(() => {
+                            button.classList.remove('copied');
+                            copyIcon.style.display = 'block';
+                            checkIcon.style.display = 'none';
+                        }, 2000);
+                    });
+                });
+            });
+        });
+    </script>
+
+    <a href="https://go.hawa-hawa.com/unity-audio-manager" class="unity-store-button" target="_blank" rel="noopener noreferrer">
+        <span class="button-text">GET IT ON UNITY ASSET STORE</span>
+        <svg class="store-icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <line x1="5" y1="12" x2="19" y2="12"></line>
+            <polyline points="12 5 19 12 12 19"></polyline>
+        </svg>
+    </a>
+</body>
+</html>
